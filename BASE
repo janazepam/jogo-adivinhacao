@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogo da Adivinhação</title>
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .container {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+  }
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #555;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #667eea;
+    color: white;
+    font-weight: bold;
+  }
+
+  button:hover {
+    opacity: 0.9;
+  }
+
+  .mensagem {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .tentativas {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🎯 Jogo da Adivinhação</h1>
+  <p>Adivinhe o número entre <strong>1 e 100</strong></p>
+
+  <input type="number" id="palpite" placeholder="Digite seu palpite">
+
+  <button onclick="verificar()">Tentar</button>
+  <button onclick="reiniciar()">🔄 Reiniciar</button>
+
+  <div class="mensagem" id="mensagem"></div>
+  <div class="tentativas" id="tentativas"></div>
+</div>
+
+<script>
+  let numeroSecreto = Math.floor(Math.random() * 100) + 1;
+  let tentativas = 0;
+
+  function verificar() {
+    const palpite = Number(document.getElementById("palpite").value);
+    const mensagem = document.getElementById("mensagem");
+    const tentativasEl = document.getElementById("tentativas");
+
+    if (!palpite || palpite < 1 || palpite > 100) {
+      mensagem.textContent = "❌ Digite um número entre 1 e 100.";
+      return;
+    }
+
+    tentativas++;
+
+    if (palpite === numeroSecreto) {
+      mensagem.textContent = "🎉 Parabéns! Você acertou!";
+      tentativasEl.textContent = `Tentativas: ${tentativas}`;
+    } else if (palpite < numeroSecreto) {
+      mensagem.textContent = "📈 O número é MAIOR";
+      tentativasEl.textContent = `Tentativas: ${tentativas}`;
+    } else {
+      mensagem.textContent = "📉 O número é MENOR";
+      tentativasEl.textContent = `Tentativas: ${tentativas}`;
+    }
+  }
+
+  function reiniciar() {
+    numeroSecreto = Math.floor(Math.random() * 100) + 1;
+    tentativas = 0;
+    document.getElementById("palpite").value = "";
+    document.getElementById("mensagem").textContent = "";
+    document.getElementById("tentativas").textContent = "";
+  }
+</script>
+
+</body>
+</html>
